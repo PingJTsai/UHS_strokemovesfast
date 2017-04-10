@@ -16627,7 +16627,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
      */
     invertVertical: false,
     /**
-     * Milliseconds before the `changed.zf-slider` event is triggered after value change. 
+     * Milliseconds before the `changed.zf-slider` event is triggered after value change.
      * @option
      * @example 500
      */
@@ -18132,13 +18132,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * VERSION: 1.18.3
  * DATE: 2016-04-19
  * UPDATES AND DOCS AT: http://greensock.com
- * 
+ *
  * Includes all of the following: TweenLite, TweenMax, TimelineLite, TimelineMax, EasePack, CSSPlugin, RoundPropsPlugin, BezierPlugin, AttrPlugin, DirectionalRotationPlugin
  *
  * @license Copyright (c) 2008-2016, GreenSock. All rights reserved.
  * This work is subject to the terms at http://greensock.com/standard-license or for
  * Club GreenSock members, the software agreement that was issued with your membership.
- * 
+ *
  * @author: Jack Doyle, jack@greensock.com
  **/
 var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(global) !== "undefined") ? global : this || window; //helps ensure compatibility with AMD/RequireJS and CommonJS/Node
@@ -18196,7 +18196,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			this._uncache(true);
 			return TweenLite.prototype.invalidate.call(this);
 		};
-		
+
 		p.updateTo = function(vars, resetDuration) {
 			var curRatio = this.ratio,
 				immediate = this.vars.immediateRender || vars.immediateRender,
@@ -18226,7 +18226,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					if (this._notifyPluginsOfEnabled && this._firstPT) {
 						TweenLite._onPluginEvent("_onDisable", this); //in case a plugin like MotionBlur must perform some cleanup tasks
 					}
-					if (this._time / this._duration > 0.998) { //if the tween has finished (or come extremely close to finishing), we just need to rewind it to 0 and then render it again at the end which forces it to re-initialize (parsing the new vars). We allow tweens that are close to finishing (but haven't quite finished) to work this way too because otherwise, the values are so small when determining where to project the starting values that binary math issues creep in and can make the tween appear to render incorrectly when run backwards. 
+					if (this._time / this._duration > 0.998) { //if the tween has finished (or come extremely close to finishing), we just need to rewind it to 0 and then render it again at the end which forces it to re-initialize (parsing the new vars). We allow tweens that are close to finishing (but haven't quite finished) to work this way too because otherwise, the values are so small when determining where to project the starting values that binary math issues creep in and can make the tween appear to render incorrectly when run backwards.
 						var prevTime = this._totalTime;
 						this.render(0, true, false);
 						this._initted = false;
@@ -18249,14 +18249,14 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			}
 			return this;
 		};
-				
+
 		p.render = function(time, suppressEvents, force) {
 			if (!this._initted) if (this._duration === 0 && this.vars.repeat) { //zero duration tweens that render immediately have render() called from TweenLite's constructor, before TweenMax's constructor has finished setting _repeat, _repeatDelay, and _yoyo which are critical in determining totalDuration() so we need to call invalidate() which is a low-kb way to get those set properly.
 				this.invalidate();
 			}
 			var totalDur = (!this._dirty) ? this._totalDuration : this.totalDuration(),
 				prevTime = this._time,
-				prevTotalTime = this._totalTime, 
+				prevTotalTime = this._totalTime,
 				prevCycle = this._cycle,
 				duration = this._duration,
 				prevRawPrevTime = this._rawPrevTime,
@@ -18288,7 +18288,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					}
 					this._rawPrevTime = rawPrevTime = (!suppressEvents || time || prevRawPrevTime === time) ? time : _tinyNum; //when the playhead arrives at EXACTLY time 0 (right on top) of a zero-duration tween, we need to discern if events are suppressed so that when the playhead moves again (next time), it'll trigger the callback. If events are NOT suppressed, obviously the callback would be triggered in this render. Basically, the callback should fire either when the playhead ARRIVES or LEAVES this exact spot, not both. Imagine doing a timeline.seek(0) and there's a callback that sits at 0. Since events are suppressed on that seek() by default, nothing will fire, but when the playhead moves off of that position, the callback should fire. This behavior is what people intuitively expect. We set the _rawPrevTime to be a precise tiny number to indicate this scenario rather than using another property/variable which would increase memory usage. This technique is less readable, but more efficient.
 				}
-				
+
 			} else if (time < 0.0000001) { //to work around occasional floating point math artifacts, round super small values to 0.
 				this._totalTime = this._time = this._cycle = 0;
 				this.ratio = this._ease._calcEnd ? this._ease.getRatio(0) : 0;
@@ -18360,9 +18360,9 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				} else {
 					this.ratio = this._ease.getRatio(this._time / duration);
 				}
-				
+
 			}
-				
+
 			if (prevTime === this._time && !force && prevCycle === this._cycle) {
 				if (prevTotalTime !== this._totalTime) if (this._onUpdate) if (!suppressEvents) { //so that onUpdate fires even during the repeatDelay - as long as the totalTime changed, we should trigger onUpdate.
 					this._callback("onUpdate");
@@ -18411,7 +18411,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					this._callback("onStart");
 				}
 			}
-			
+
 			pt = this._firstPT;
 			while (pt) {
 				if (pt.f) {
@@ -18421,7 +18421,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				}
 				pt = pt._next;
 			}
-			
+
 			if (this._onUpdate) {
 				if (time < 0) if (this._startAt && this._startTime) { //if the tween is positioned at the VERY beginning (_startTime 0) of its parent timeline, it's illegal for the playhead to go back further, so we should not render the recorded startAt values.
 					this._startAt.render(time, suppressEvents, force); //note: for performance reasons, we tuck this conditional logic inside less traveled areas (most tweens don't have an onUpdate). We'd just have it at the end before the onComplete, but the values should be updated before any onUpdate is called, so we ALSO put it here and then if it's not called, we do so later near the onComplete.
@@ -18451,25 +18451,25 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				}
 			}
 		};
-		
+
 //---- STATIC FUNCTIONS -----------------------------------------------------------------------------------------------------------
-		
+
 		TweenMax.to = function(target, duration, vars) {
 			return new TweenMax(target, duration, vars);
 		};
-		
+
 		TweenMax.from = function(target, duration, vars) {
 			vars.runBackwards = true;
 			vars.immediateRender = (vars.immediateRender != false);
 			return new TweenMax(target, duration, vars);
 		};
-		
+
 		TweenMax.fromTo = function(target, duration, fromVars, toVars) {
 			toVars.startAt = fromVars;
 			toVars.immediateRender = (toVars.immediateRender != false && fromVars.immediateRender != false);
 			return new TweenMax(target, duration, toVars);
 		};
-		
+
 		TweenMax.staggerTo = TweenMax.allTo = function(targets, duration, vars, stagger, onCompleteAll, onCompleteAllParams, onCompleteAllScope) {
 			stagger = stagger || 0;
 			var delay = 0,
@@ -18522,31 +18522,31 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			}
 			return a;
 		};
-		
+
 		TweenMax.staggerFrom = TweenMax.allFrom = function(targets, duration, vars, stagger, onCompleteAll, onCompleteAllParams, onCompleteAllScope) {
 			vars.runBackwards = true;
 			vars.immediateRender = (vars.immediateRender != false);
 			return TweenMax.staggerTo(targets, duration, vars, stagger, onCompleteAll, onCompleteAllParams, onCompleteAllScope);
 		};
-		
+
 		TweenMax.staggerFromTo = TweenMax.allFromTo = function(targets, duration, fromVars, toVars, stagger, onCompleteAll, onCompleteAllParams, onCompleteAllScope) {
 			toVars.startAt = fromVars;
 			toVars.immediateRender = (toVars.immediateRender != false && fromVars.immediateRender != false);
 			return TweenMax.staggerTo(targets, duration, toVars, stagger, onCompleteAll, onCompleteAllParams, onCompleteAllScope);
 		};
-				
+
 		TweenMax.delayedCall = function(delay, callback, params, scope, useFrames) {
 			return new TweenMax(callback, 0, {delay:delay, onComplete:callback, onCompleteParams:params, callbackScope:scope, onReverseComplete:callback, onReverseCompleteParams:params, immediateRender:false, useFrames:useFrames, overwrite:0});
 		};
-		
+
 		TweenMax.set = function(target, vars) {
 			return new TweenMax(target, 0, vars);
 		};
-		
+
 		TweenMax.isTweening = function(target) {
 			return (TweenLite.getTweensOf(target, true).length > 0);
 		};
-		
+
 		var _getChildrenOf = function(timeline, includeTimelines) {
 				var a = [],
 					cnt = 0,
@@ -18564,11 +18564,11 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					tween = tween._next;
 				}
 				return a;
-			}, 
+			},
 			getAllTweens = TweenMax.getAllTweens = function(includeTimelines) {
 				return _getChildrenOf(Animation._rootTimeline, includeTimelines).concat( _getChildrenOf(Animation._rootFramesTimeline, includeTimelines) );
 			};
-		
+
 		TweenMax.killAll = function(complete, tweens, delayedCalls, timelines) {
 			if (tweens == null) {
 				tweens = true;
@@ -18591,7 +18591,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				}
 			}
 		};
-		
+
 		TweenMax.killChildTweensOf = function(parent, complete) {
 			if (parent == null) {
 				return;
@@ -18645,11 +18645,11 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				}
 			}
 		};
-		
+
 		TweenMax.pauseAll = function(tweens, delayedCalls, timelines) {
 			_changePause(true, tweens, delayedCalls, timelines);
 		};
-		
+
 		TweenMax.resumeAll = function(tweens, delayedCalls, timelines) {
 			_changePause(false, tweens, delayedCalls, timelines);
 		};
@@ -18668,18 +18668,18 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			tl._timeScale = Animation._rootTimeline._timeScale = value;
 			return value;
 		};
-		
-	
+
+
 //---- GETTERS / SETTERS ----------------------------------------------------------------------------------------------------------
-		
+
 		p.progress = function(value, suppressEvents) {
 			return (!arguments.length) ? this._time / this.duration() : this.totalTime( this.duration() * ((this._yoyo && (this._cycle & 1) !== 0) ? 1 - value : value) + (this._cycle * (this._duration + this._repeatDelay)), suppressEvents);
 		};
-		
+
 		p.totalProgress = function(value, suppressEvents) {
 			return (!arguments.length) ? this._totalTime / this.totalDuration() : this.totalTime( this.totalDuration() * value, suppressEvents);
 		};
-		
+
 		p.time = function(value, suppressEvents) {
 			if (!arguments.length) {
 				return this._time;
@@ -18716,7 +18716,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			}
 			return (this._repeat === -1) ? this : this.duration( (value - (this._repeat * this._repeatDelay)) / (this._repeat + 1) );
 		};
-		
+
 		p.repeat = function(value) {
 			if (!arguments.length) {
 				return this._repeat;
@@ -18724,7 +18724,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			this._repeat = value;
 			return this._uncache(true);
 		};
-		
+
 		p.repeatDelay = function(value) {
 			if (!arguments.length) {
 				return this._repeatDelay;
@@ -18732,7 +18732,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			this._repeatDelay = value;
 			return this._uncache(true);
 		};
-		
+
 		p.yoyo = function(value) {
 			if (!arguments.length) {
 				return this._yoyo;
@@ -18740,10 +18740,10 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			this._yoyo = value;
 			return this;
 		};
-		
-		
+
+
 		return TweenMax;
-		
+
 	}, true);
 
 
@@ -19510,11 +19510,11 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 
 
-	
-	
-	
-	
-	
+
+
+
+
+
 /*
  * ----------------------------------------------------------------
  * TimelineMax
@@ -20011,18 +20011,18 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		return TimelineMax;
 
 	}, true);
-	
 
 
 
 
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
 /*
  * ----------------------------------------------------------------
  * BezierPlugin
@@ -20602,14 +20602,14 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 
 
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
 /*
  * ----------------------------------------------------------------
  * CSSPlugin
@@ -23319,16 +23319,16 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 	}, true);
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
 /*
  * ----------------------------------------------------------------
  * RoundPropsPlugin
@@ -23531,17 +23531,17 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 
 
-	
-	
-	
-	
+
+
+
+
 /*
  * ----------------------------------------------------------------
  * EasePack
  * ----------------------------------------------------------------
  */
 	_gsScope._gsDefine("easing.Back", ["easing.Ease"], function(Ease) {
-		
+
 		var w = (_gsScope.GreenSockGlobals || _gsScope),
 			gs = w.com.greensock,
 			_2PI = Math.PI * 2,
@@ -23865,7 +23865,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		_easeReg(SteppedEase, "SteppedEase", "ease,");
 
 		return Back;
-		
+
 	}, true);
 
 
@@ -25769,7 +25769,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
  * The javascript library for magical scroll interactions.
  * (c) 2015 Jan Paepke (@janpaepke)
  * Project Website: http://scrollmagic.io
- * 
+ *
  * @version 2.0.5
  * @license Dual licensed under MIT license and GPL.
  * @author Jan Paepke - e-mail@janpaepke.de
@@ -25826,8 +25826,8 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 	 ** `1` => errors
 	 ** `2` => errors, warnings
 	 ** `3` => errors, warnings, debuginfo
-	 * @param {boolean} [options.refreshInterval=100] - Some changes don't call events by default, like changing the container size or moving a scene trigger element.  
-	 This interval polls these parameters to fire the necessary events.  
+	 * @param {boolean} [options.refreshInterval=100] - Some changes don't call events by default, like changing the container size or moving a scene trigger element.
+	 This interval polls these parameters to fire the necessary events.
 	 If you don't use custom containers, trigger elements or have static layouts, where the positions of the trigger elements don't change, you can set this to 0 disable interval checking and improve performance.
 	 *
 	 */
@@ -26073,7 +26073,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		 */
 
 		/**
-		 * Add one ore more scene(s) to the controller.  
+		 * Add one ore more scene(s) to the controller.
 		 * This is the equivalent to `Scene.addTo(controller)`.
 		 * @public
 		 * @example
@@ -26119,7 +26119,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		};
 
 		/**
-		 * Remove one ore more scene(s) from the controller.  
+		 * Remove one ore more scene(s) from the controller.
 		 * This is the equivalent to `Scene.remove()`.
 		 * @public
 		 * @example
@@ -26150,10 +26150,10 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		};
 
 		/**
-		 * Update one ore more scene(s) according to the scroll position of the container.  
-		 * This is the equivalent to `Scene.update()`.  
-		 * The update method calculates the scene's start and end position (based on the trigger element, trigger hook, duration and offset) and checks it against the current scroll position of the container.  
-		 * It then updates the current scene state accordingly (or does nothing, if the state is already correct) – Pins will be set to their correct position and tweens will be updated to their correct progress.  
+		 * Update one ore more scene(s) according to the scroll position of the container.
+		 * This is the equivalent to `Scene.update()`.
+		 * The update method calculates the scene's start and end position (based on the trigger element, trigger hook, duration and offset) and checks it against the current scroll position of the container.
+		 * It then updates the current scene state accordingly (or does nothing, if the state is already correct) – Pins will be set to their correct position and tweens will be updated to their correct progress.
 		 * _**Note:** This method gets called constantly whenever Controller detects a change. The only application for you is if you change something outside of the realm of ScrollMagic, like moving the trigger or changing tween parameters._
 		 * @public
 		 * @example
@@ -26167,7 +26167,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		 * controller.updateScene([scene1, scene2, scene3]);
 		 *
 		 * @param {ScrollMagic.Scene} Scene - ScrollMagic Scene or Array of Scenes that is/are supposed to be updated.
-		 * @param {boolean} [immediately=false] - If `true` the update will be instant, if `false` it will wait until next update cycle.  
+		 * @param {boolean} [immediately=false] - If `true` the update will be instant, if `false` it will wait until next update cycle.
 		 This is useful when changing multiple properties of the scene - this way it will only be updated once all new properties are set (updateScenes).
 		 * @return {Controller} Parent object for chaining.
 		 */
@@ -26193,10 +26193,10 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		};
 
 		/**
-		 * Updates the controller params and calls updateScene on every scene, that is attached to the controller.  
-		 * See `Controller.updateScene()` for more information about what this means.  
-		 * In most cases you will not need this function, as it is called constantly, whenever ScrollMagic detects a state change event, like resize or scroll.  
-		 * The only application for this method is when ScrollMagic fails to detect these events.  
+		 * Updates the controller params and calls updateScene on every scene, that is attached to the controller.
+		 * See `Controller.updateScene()` for more information about what this means.
+		 * In most cases you will not need this function, as it is called constantly, whenever ScrollMagic detects a state change event, like resize or scroll.
+		 * The only application for this method is when ScrollMagic fails to detect these events.
 		 * One application is with some external scroll libraries (like iScroll) that move an internal container to a negative offset instead of actually scrolling. In this case the update on the controller needs to be called whenever the child container's position changes.
 		 * For this case there will also be the need to provide a custom function to calculate the correct scroll position. See `Controller.scrollPos()` for details.
 		 * @public
@@ -26221,7 +26221,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		};
 
 		/**
-		 * Scroll to a numeric scroll offset, a DOM element, the start of a scene or provide an alternate method for scrolling.  
+		 * Scroll to a numeric scroll offset, a DOM element, the start of a scene or provide an alternate method for scrolling.
 		 * For vertical controllers it will change the top scroll offset and for horizontal applications it will change the left offset.
 		 * @public
 		 *
@@ -26270,13 +26270,13 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		 *
 		 * @param {mixed} scrollTarget - The supplied argument can be one of these types:
 		 * 1. `number` -> The container will scroll to this new scroll offset.
-		 * 2. `string` or `object` -> Can be a selector or a DOM object.  
+		 * 2. `string` or `object` -> Can be a selector or a DOM object.
 		 *  The container will scroll to the position of this element.
 		 * 3. `ScrollMagic Scene` -> The container will scroll to the start of this scene.
-		 * 4. `function` -> This function will be used for future scroll position modifications.  
-		 *  This provides a way for you to change the behaviour of scrolling and adding new behaviour like animation. The function receives the new scroll position as a parameter and a reference to the container element using `this`.  
-		 *  It may also optionally receive an optional additional parameter (see below)  
-		 *  _**NOTE:**  
+		 * 4. `function` -> This function will be used for future scroll position modifications.
+		 *  This provides a way for you to change the behaviour of scrolling and adding new behaviour like animation. The function receives the new scroll position as a parameter and a reference to the container element using `this`.
+		 *  It may also optionally receive an optional additional parameter (see below)
+		 *  _**NOTE:**
 		 *  All other options will still work as expected, using the new function to scroll._
 		 * @param {mixed} [additionalParameter] - If a custom scroll function was defined (see above 4.), you may want to supply additional parameters to it, when calling it. You can do this using this parameter – see examples for details. Please note, that this parameter will have no effect, if you use the default scrolling function.
 		 * @returns {Controller} Parent object for chaining.
@@ -26320,17 +26320,17 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		};
 
 		/**
-		 * **Get** the current scrollPosition or **Set** a new method to calculate it.  
+		 * **Get** the current scrollPosition or **Set** a new method to calculate it.
 		 * -> **GET**:
-		 * When used as a getter this function will return the current scroll position.  
-		 * To get a cached value use Controller.info("scrollPos"), which will be updated in the update cycle.  
+		 * When used as a getter this function will return the current scroll position.
+		 * To get a cached value use Controller.info("scrollPos"), which will be updated in the update cycle.
 		 * For vertical controllers it will return the top scroll offset and for horizontal applications it will return the left offset.
 		 *
 		 * -> **SET**:
-		 * When used as a setter this method prodes a way to permanently overwrite the controller's scroll position calculation.  
-		 * A typical usecase is when the scroll position is not reflected by the containers scrollTop or scrollLeft values, but for example by the inner offset of a child container.  
-		 * Moving a child container inside a parent is a commonly used method for several scrolling frameworks, including iScroll.  
-		 * By providing an alternate calculation function you can make sure ScrollMagic receives the correct scroll position.  
+		 * When used as a setter this method prodes a way to permanently overwrite the controller's scroll position calculation.
+		 * A typical usecase is when the scroll position is not reflected by the containers scrollTop or scrollLeft values, but for example by the inner offset of a child container.
+		 * Moving a child container inside a parent is a commonly used method for several scrolling frameworks, including iScroll.
+		 * By providing an alternate calculation function you can make sure ScrollMagic receives the correct scroll position.
 		 * Please also bear in mind that your function should return y values for vertical scrolls an x for horizontals.
 		 *
 		 * To change the current scroll position please use `Controller.scrollTo()`.
@@ -26371,7 +26371,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		 * // returns all infos as an object
 		 * var infos = controller.info();
 		 *
-		 * @param {string} [about] - If passed only this info will be returned instead of an object containing all.  
+		 * @param {string} [about] - If passed only this info will be returned instead of an object containing all.
 		 Valid options are:
 		 ** `"size"` => the current viewport size of the container
 		 ** `"vertical"` => true if vertical scrolling, otherwise false
@@ -26425,7 +26425,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		};
 
 		/**
-		 * **Get** or **Set** the current enabled state of the controller.  
+		 * **Get** or **Set** the current enabled state of the controller.
 		 * This can be used to disable all Scenes connected to the controller without destroying or removing them.
 		 * @public
 		 *
@@ -26529,15 +26529,15 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 	 *		reverse: false
 	 * });
 	 *
-	 * @param {object} [options] - Options for the Scene. The options can be updated at any time.  
-	 Instead of setting the options for each scene individually you can also set them globally in the controller as the controllers `globalSceneOptions` option. The object accepts the same properties as the ones below.  
+	 * @param {object} [options] - Options for the Scene. The options can be updated at any time.
+	 Instead of setting the options for each scene individually you can also set them globally in the controller as the controllers `globalSceneOptions` option. The object accepts the same properties as the ones below.
 	 When a scene is added to the controller the options defined using the Scene constructor will be overwritten by those set in `globalSceneOptions`.
-	 * @param {(number|function)} [options.duration=0] - The duration of the scene. 
-	 If `0` tweens will auto-play when reaching the scene start point, pins will be pinned indefinetly starting at the start position.  
+	 * @param {(number|function)} [options.duration=0] - The duration of the scene.
+	 If `0` tweens will auto-play when reaching the scene start point, pins will be pinned indefinetly starting at the start position.
 	 A function retuning the duration value is also supported. Please see `Scene.duration()` for details.
 	 * @param {number} [options.offset=0] - Offset Value for the Trigger Position. If no triggerElement is defined this will be the scroll distance from the start of the page, after which the scene will start.
 	 * @param {(string|object)} [options.triggerElement=null] - Selector or DOM object that defines the start of the scene. If undefined the scene will start right at the start of the page (unless an offset is set).
-	 * @param {(number|string)} [options.triggerHook="onCenter"] - Can be a number between 0 and 1 defining the position of the trigger Hook in relation to the viewport.  
+	 * @param {(number|string)} [options.triggerHook="onCenter"] - Can be a number between 0 and 1 defining the position of the trigger Hook in relation to the viewport.
 	 Can also be defined using a string:
 	 ** `"onEnter"` => `1`
 	 ** `"onCenter"` => `0.5`
@@ -26548,7 +26548,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 	 ** `1` => errors
 	 ** `2` => errors, warnings
 	 ** `3` => errors, warnings, debuginfo
-	 * 
+	 *
 	 */
 	ScrollMagic.Scene = function (options) {
 
@@ -26612,8 +26612,8 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 
 		var _listeners = {};
 		/**
-		 * Scene start event.  
-		 * Fires whenever the scroll position its the starting point of the scene.  
+		 * Scene start event.
+		 * Fires whenever the scroll position its the starting point of the scene.
 		 * It will also fire when scrolling back up going over the start position of the scene. If you want something to happen only when scrolling down/right, use the scrollDirection parameter passed to the callback.
 		 *
 		 * For details on this event and the order in which it is fired, please review the {@link Scene.progress} method.
@@ -26633,8 +26633,8 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		 * @property {string} event.scrollDirection - Indicates which way we are scrolling `"PAUSED"`, `"FORWARD"` or `"REVERSE"`
 		 */
 		/**
-		 * Scene end event.  
-		 * Fires whenever the scroll position its the ending point of the scene.  
+		 * Scene end event.
+		 * Fires whenever the scroll position its the ending point of the scene.
 		 * It will also fire when scrolling back up from after the scene and going over its end position. If you want something to happen only when scrolling down/right, use the scrollDirection parameter passed to the callback.
 		 *
 		 * For details on this event and the order in which it is fired, please review the {@link Scene.progress} method.
@@ -26654,8 +26654,8 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		 * @property {string} event.scrollDirection - Indicates which way we are scrolling `"PAUSED"`, `"FORWARD"` or `"REVERSE"`
 		 */
 		/**
-		 * Scene enter event.  
-		 * Fires whenever the scene enters the "DURING" state.  
+		 * Scene enter event.
+		 * Fires whenever the scene enters the "DURING" state.
 		 * Keep in mind that it doesn't matter if the scene plays forward or backward: This event always fires when the scene enters its active scroll timeframe, regardless of the scroll-direction.
 		 *
 		 * For details on this event and the order in which it is fired, please review the {@link Scene.progress} method.
@@ -26675,8 +26675,8 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		 * @property {string} event.scrollDirection - Indicates which way we are scrolling `"PAUSED"`, `"FORWARD"` or `"REVERSE"`
 		 */
 		/**
-		 * Scene leave event.  
-		 * Fires whenever the scene's state goes from "DURING" to either "BEFORE" or "AFTER".  
+		 * Scene leave event.
+		 * Fires whenever the scene's state goes from "DURING" to either "BEFORE" or "AFTER".
 		 * Keep in mind that it doesn't matter if the scene plays forward or backward: This event always fires when the scene leaves its active scroll timeframe, regardless of the scroll-direction.
 		 *
 		 * For details on this event and the order in which it is fired, please review the {@link Scene.progress} method.
@@ -26696,7 +26696,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		 * @property {string} event.scrollDirection - Indicates which way we are scrolling `"PAUSED"`, `"FORWARD"` or `"REVERSE"`
 		 */
 		/**
-		 * Scene update event.  
+		 * Scene update event.
 		 * Fires whenever the scene is updated (but not necessarily changes the progress).
 		 *
 		 * @event ScrollMagic.Scene#update
@@ -26714,7 +26714,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		 * @property {number} event.scrollPos - The current scroll position of the container
 		 */
 		/**
-		 * Scene progress event.  
+		 * Scene progress event.
 		 * Fires whenever the progress of the scene changes.
 		 *
 		 * For details on this event and the order in which it is fired, please review the {@link Scene.progress} method.
@@ -26734,7 +26734,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		 * @property {string} event.scrollDirection - Indicates which way we are scrolling `"PAUSED"`, `"FORWARD"` or `"REVERSE"`
 		 */
 		/**
-		 * Scene change event.  
+		 * Scene change event.
 		 * Fires whenvever a property of the scene is changed.
 		 *
 		 * @event ScrollMagic.Scene#change
@@ -26751,7 +26751,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		 * @property {mixed} event.newval - The new value of the changed property
 		 */
 		/**
-		 * Scene shift event.  
+		 * Scene shift event.
 		 * Fires whenvever the start or end **scroll offset** of the scene change.
 		 * This happens explicitely, when one of these values change: `offset`, `duration` or `triggerHook`.
 		 * It will fire implicitly when the `triggerElement` changes, if the new element has a different position (most cases).
@@ -26771,7 +26771,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		 * @property {string} event.reason - Indicates why the scene has shifted
 		 */
 		/**
-		 * Scene destroy event.  
+		 * Scene destroy event.
 		 * Fires whenvever the scene is destroyed.
 		 * This can be used to tidy up custom behaviour used in events.
 		 *
@@ -26796,7 +26796,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		 * @property {boolean} event.reset - Indicates if the destroy method was called with reset `true` or `false`.
 		 */
 		/**
-		 * Scene add event.  
+		 * Scene add event.
 		 * Fires when the scene is added to a controller.
 		 * This is mostly used by plugins to know that change might be due.
 		 *
@@ -26814,7 +26814,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		 * @property {boolean} event.controller - The controller object the scene was added to.
 		 */
 		/**
-		 * Scene remove event.  
+		 * Scene remove event.
 		 * Fires when the scene is removed from a controller.
 		 * This is mostly used by plugins to know that change might be due.
 		 *
@@ -26832,7 +26832,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		 */
 
 		/**
-		 * Add one ore more event listener.  
+		 * Add one ore more event listener.
 		 * The callback function will be fired at the respective event, and an object containing relevant data will be passed to the callback.
 		 * @method ScrollMagic.Scene#on
 		 *
@@ -26980,7 +26980,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		};
 
 		/**
-		 * Add the scene to a controller.  
+		 * Add the scene to a controller.
 		 * This is the equivalent to `Controller.addScene(scene)`.
 		 * @method ScrollMagic.Scene#addTo
 		 *
@@ -27016,7 +27016,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		};
 
 		/**
-		 * **Get** or **Set** the current enabled state of the scene.  
+		 * **Get** or **Set** the current enabled state of the scene.
 		 * This can be used to disable this scene without removing or destroying it.
 		 * @method ScrollMagic.Scene#enabled
 		 *
@@ -27041,7 +27041,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		};
 
 		/**
-		 * Remove the scene from the controller.  
+		 * Remove the scene from the controller.
 		 * This is the equivalent to `Controller.removeScene(scene)`.
 		 * The scene will not be updated anymore until you readd it to a controller.
 		 * To remove the pin or the tween you need to call removeTween() or removePin() respectively.
@@ -27089,11 +27089,11 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 
 
 		/**
-		 * Updates the Scene to reflect the current state.  
-		 * This is the equivalent to `Controller.updateScene(scene, immediately)`.  
-		 * The update method calculates the scene's start and end position (based on the trigger element, trigger hook, duration and offset) and checks it against the current scroll position of the container.  
+		 * Updates the Scene to reflect the current state.
+		 * This is the equivalent to `Controller.updateScene(scene, immediately)`.
+		 * The update method calculates the scene's start and end position (based on the trigger element, trigger hook, duration and offset) and checks it against the current scroll position of the container.
 		 * It then updates the current scene state accordingly (or does nothing, if the state is already correct) – Pins will be set to their correct position and tweens will be updated to their correct progress.
-		 * This means an update doesn't necessarily result in a progress change. The `progress` event will be fired if the progress has indeed changed between this update and the last.  
+		 * This means an update doesn't necessarily result in a progress change. The `progress` event will be fired if the progress has indeed changed between this update and the last.
 		 * _**NOTE:** This method gets called constantly whenever ScrollMagic detects a change. The only application for you is if you change something outside of the realm of ScrollMagic, like moving the trigger or changing tween parameters._
 		 * @method ScrollMagic.Scene#update
 		 * @example
@@ -27142,7 +27142,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		/**
 		 * Updates dynamic scene variables like the trigger element position or the duration.
 		 * This method is automatically called in regular intervals from the controller. See {@link ScrollMagic.Controller} option `refreshInterval`.
-		 * 
+		 *
 		 * You can call it to minimize lag, for example when you intentionally change the position of the triggerElement.
 		 * If you don't it will simply be updated in the next refresh interval of the container, which is usually sufficient.
 		 *
@@ -27150,7 +27150,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		 * @since 1.1.0
 		 * @example
 		 * scene = new ScrollMagic.Scene({triggerElement: "#trigger"});
-		 * 
+		 *
 		 * // change the position of the trigger
 		 * $("#trigger").css("top", 500);
 		 * // immediately let the scene know of this change
@@ -27169,33 +27169,33 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		};
 
 		/**
-		 * **Get** or **Set** the scene's progress.  
-		 * Usually it shouldn't be necessary to use this as a setter, as it is set automatically by scene.update().  
+		 * **Get** or **Set** the scene's progress.
+		 * Usually it shouldn't be necessary to use this as a setter, as it is set automatically by scene.update().
 		 * The order in which the events are fired depends on the duration of the scene:
-		 *  1. Scenes with `duration == 0`:  
-		 *  Scenes that have no duration by definition have no ending. Thus the `end` event will never be fired.  
-		 *  When the trigger position of the scene is passed the events are always fired in this order:  
-		 *  `enter`, `start`, `progress` when scrolling forward  
-		 *  and  
+		 *  1. Scenes with `duration == 0`:
+		 *  Scenes that have no duration by definition have no ending. Thus the `end` event will never be fired.
+		 *  When the trigger position of the scene is passed the events are always fired in this order:
+		 *  `enter`, `start`, `progress` when scrolling forward
+		 *  and
 		 *  `progress`, `start`, `leave` when scrolling in reverse
-		 *  2. Scenes with `duration > 0`:  
-		 *  Scenes with a set duration have a defined start and end point.  
-		 *  When scrolling past the start position of the scene it will fire these events in this order:  
-		 *  `enter`, `start`, `progress`  
-		 *  When continuing to scroll and passing the end point it will fire these events:  
-		 *  `progress`, `end`, `leave`  
-		 *  When reversing through the end point these events are fired:  
-		 *  `enter`, `end`, `progress`  
-		 *  And when continuing to scroll past the start position in reverse it will fire:  
-		 *  `progress`, `start`, `leave`  
+		 *  2. Scenes with `duration > 0`:
+		 *  Scenes with a set duration have a defined start and end point.
+		 *  When scrolling past the start position of the scene it will fire these events in this order:
+		 *  `enter`, `start`, `progress`
+		 *  When continuing to scroll and passing the end point it will fire these events:
+		 *  `progress`, `end`, `leave`
+		 *  When reversing through the end point these events are fired:
+		 *  `enter`, `end`, `progress`
+		 *  And when continuing to scroll past the start position in reverse it will fire:
+		 *  `progress`, `start`, `leave`
 		 *  In between start and end the `progress` event will be called constantly, whenever the progress changes.
-		 * 
-		 * In short:  
-		 * `enter` events will always trigger **before** the progress update and `leave` envents will trigger **after** the progress update.  
+		 *
+		 * In short:
+		 * `enter` events will always trigger **before** the progress update and `leave` envents will trigger **after** the progress update.
 		 * `start` and `end` will always trigger at their respective position.
-		 * 
+		 *
 		 * Please review the event descriptions for details on the events and the event object that is passed to the callback.
-		 * 
+		 *
 		 * @method ScrollMagic.Scene#progress
 		 * @example
 		 * // get the current scene progress
@@ -27285,7 +27285,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		 * Update the start and end scrollOffset of the container.
 		 * The positions reflect what the controller's scroll position will be at the start and end respectively.
 		 * Is called, when:
-		 *   - Scene event "change" is called with: offset, triggerHook, duration 
+		 *   - Scene event "change" is called with: offset, triggerHook, duration
 		 *   - scroll container event "resize" is called
 		 *   - the position of the triggerElement changes
 		 *   - the controller changes -> addTo()
@@ -27305,7 +27305,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		/**
 		 * Updates the duration if set to a dynamic function.
 		 * This method is called when the scene is added to a controller and in regular intervals from the controller through scene.refresh().
-		 * 
+		 *
 		 * @fires {@link Scene.change}, if the duration changed
 		 * @fires {@link Scene.shift}, if the duration changed
 		 *
@@ -27334,7 +27334,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		 *  - ... when the triggerElement is changed
 		 *  - ... when the scene is added to a (new) controller
 		 *  - ... in regular intervals from the controller through scene.refresh().
-		 * 
+		 *
 		 * @fires {@link Scene.shift}, if the position changed
 		 *
 		 * @param {boolean} [suppressEvents=false] - If true the shift event will be suppressed.
@@ -27490,12 +27490,12 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 
 		/**
 		 * **Get** or **Set** the duration option value.
-		 * As a setter it also accepts a function returning a numeric value.  
+		 * As a setter it also accepts a function returning a numeric value.
 		 * This is particularly useful for responsive setups.
 		 *
-		 * The duration is updated using the supplied function every time `Scene.refresh()` is called, which happens periodically from the controller (see ScrollMagic.Controller option `refreshInterval`).  
-		 * _**NOTE:** Be aware that it's an easy way to kill performance, if you supply a function that has high CPU demand.  
-		 * Even for size and position calculations it is recommended to use a variable to cache the value. (see example)  
+		 * The duration is updated using the supplied function every time `Scene.refresh()` is called, which happens periodically from the controller (see ScrollMagic.Controller option `refreshInterval`).
+		 * _**NOTE:** Be aware that it's an easy way to kill performance, if you supply a function that has high CPU demand.
+		 * Even for size and position calculations it is recommended to use a variable to cache the value. (see example)
 		 * This counts double if you use the same function for multiple scenes._
 		 *
 		 * @method ScrollMagic.Scene#duration
@@ -27639,8 +27639,8 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		};
 
 		/**
-		 * **Get** the current scroll offset for the start of the scene.  
-		 * Mind, that the scrollOffset is related to the size of the container, if `triggerHook` is bigger than `0` (or `"onLeave"`).  
+		 * **Get** the current scroll offset for the start of the scene.
+		 * Mind, that the scrollOffset is related to the size of the container, if `triggerHook` is bigger than `0` (or `"onLeave"`).
 		 * This means, that resizing the container or changing the `triggerHook` will influence the scene's start offset.
 		 * @method ScrollMagic.Scene#scrollOffset
 		 * @example
@@ -27656,7 +27656,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		};
 
 		/**
-		 * **Get** the trigger position of the scene (including the value of the `offset` option).  
+		 * **Get** the trigger position of the scene (including the value of the `offset` option).
 		 * @method ScrollMagic.Scene#triggerPosition
 		 * @example
 		 * // get the scene's trigger position
@@ -27860,8 +27860,8 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		};
 
 		/**
-		 * Pin an element for the duration of the tween.  
-		 * If the scene duration is 0 the element will only be unpinned, if the user scrolls back past the start position.  
+		 * Pin an element for the duration of the tween.
+		 * If the scene duration is 0 the element will only be unpinned, if the user scrolls back past the start position.
 		 * Make sure only one pin is applied to an element at the same time.
 		 * An element can be pinned multiple times, but only successively.
 		 * _**NOTE:** The option `pushFollowers` has no effect, when the scene duration is 0._
@@ -27875,7 +27875,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		 *
 		 * @param {(string|object)} element - A Selector targeting an element or a DOM object that is supposed to be pinned.
 		 * @param {object} [settings] - settings for the pin
-		 * @param {boolean} [settings.pushFollowers=true] - If `true` following elements will be "pushed" down for the duration of the pin, if `false` the pinned element will just scroll past them.  
+		 * @param {boolean} [settings.pushFollowers=true] - If `true` following elements will be "pushed" down for the duration of the pin, if `false` the pinned element will just scroll past them.
 		 Ignored, when duration is `0`.
 		 * @param {string} [settings.spacerClass="scrollmagic-pin-spacer"] - Classname of the pin spacer element, which is used to replace the element.
 		 *
@@ -27984,7 +27984,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 				});
 			}
 
-			// now place the pin element inside the spacer	
+			// now place the pin element inside the spacer
 			spacer.appendChild(_pin);
 			// and set new css
 			_util.css(_pin, {
@@ -28077,7 +28077,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 			Scene.removeClassToggle(e.reset);
 		});
 		/**
-		 * Define a css class modification while the scene is active.  
+		 * Define a css class modification while the scene is active.
 		 * When the scene triggers the classes will be added to the supplied element and removed, when the scene is over.
 		 * If the scene duration is 0 the classes will only be removed if the user scrolls back past the start position.
 		 * @method ScrollMagic.Scene#setClassToggle
@@ -28548,7 +28548,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
  * The javascript library for magical scroll interactions.
  * (c) 2015 Jan Paepke (@janpaepke)
  * Project Website: http://scrollmagic.io
- * 
+ *
  * @version 2.0.5
  * @license Dual licensed under MIT license and GPL.
  * @author Jan Paepke - e-mail@janpaepke.de
@@ -28558,10 +28558,10 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
  * requires: jQuery ~1.11 or ~2.1
  */
 /**
- * This plugin is meant to be used in conjunction with jQuery.  
- * It enables ScrollMagic to make use of jQuery's advanced selector engine (sizzle) for all elements supplied to ScrollMagic objects, like scroll containers or trigger elements.  
+ * This plugin is meant to be used in conjunction with jQuery.
+ * It enables ScrollMagic to make use of jQuery's advanced selector engine (sizzle) for all elements supplied to ScrollMagic objects, like scroll containers or trigger elements.
  * ScrollMagic also accepts jQuery elements for all methods that expect references to DOM elements. Please note, that in most cases the first element of the matched set will be used.
- * 
+ *
  * Additionally it provides the ScrollMagic object within the jQuery namespace, so it can be accessed using `$.ScrollMagic`.
  *
  * In contrast to most other plugins it does not offer new API additions for ScrollMagic.
@@ -28616,7 +28616,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
  * The javascript library for magical scroll interactions.
  * (c) 2015 Jan Paepke (@janpaepke)
  * Project Website: http://scrollmagic.io
- * 
+ *
  * @version 2.0.5
  * @license Dual licensed under MIT license and GPL.
  * @author Jan Paepke - e-mail@janpaepke.de
@@ -28628,12 +28628,12 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
  * Greensock License info at http://www.greensock.com/licensing/
  */
 /**
- * This plugin is meant to be used in conjunction with the Greensock Animation Plattform.  
+ * This plugin is meant to be used in conjunction with the Greensock Animation Plattform.
  * It offers an easy API to trigger Tweens or synchronize them to the scrollbar movement.
  *
- * Both the `lite` and the `max` versions of the GSAP library are supported.  
+ * Both the `lite` and the `max` versions of the GSAP library are supported.
  * The most basic requirement is `TweenLite`.
- * 
+ *
  * To have access to this extension, please include `plugins/animation.gsap.js`.
  * @requires {@link http://greensock.com/gsap|GSAP ~1.14.x}
  * @mixin animation.GSAP
@@ -28672,7 +28672,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 	 * ----------------------------------------------------------------
 	 */
 	/**
-	 * Every instance of ScrollMagic.Scene now accepts an additional option.  
+	 * Every instance of ScrollMagic.Scene now accepts an additional option.
 	 * See {@link ScrollMagic.Scene} for a complete list of the standard options.
 	 * @memberof! animation.GSAP#
 	 * @method new ScrollMagic.Scene(options)
@@ -28680,16 +28680,16 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 	 * var scene = new ScrollMagic.Scene({tweenChanges: true});
 	 *
 	 * @param {object} [options] - Options for the Scene. The options can be updated at any time.
-	 * @param {boolean} [options.tweenChanges=false] - Tweens Animation to the progress target instead of setting it.  
+	 * @param {boolean} [options.tweenChanges=false] - Tweens Animation to the progress target instead of setting it.
 	 Does not affect animations where duration is `0`.
 	 */
 	/**
-	 * **Get** or **Set** the tweenChanges option value.  
-	 * This only affects scenes with a duration. If `tweenChanges` is `true`, the progress update when scrolling will not be immediate, but instead the animation will smoothly animate to the target state.  
+	 * **Get** or **Set** the tweenChanges option value.
+	 * This only affects scenes with a duration. If `tweenChanges` is `true`, the progress update when scrolling will not be immediate, but instead the animation will smoothly animate to the target state.
 	 * For a better understanding, try enabling and disabling this option in the [Scene Manipulation Example](../examples/basic/scene_manipulation.html).
 	 * @memberof! animation.GSAP#
 	 * @method Scene.tweenChanges
-	 * 
+	 *
 	 * @example
 	 * // get the current tweenChanges option
 	 * var tweenChanges = scene.tweenChanges();
@@ -28770,11 +28770,11 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		};
 
 		/**
-		 * Add a tween to the scene.  
-		 * If you want to add multiple tweens, add them into a GSAP Timeline object and supply it instead (see example below).  
-		 * 
-		 * If the scene has a duration, the tween's duration will be projected to the scroll distance of the scene, meaning its progress will be synced to scrollbar movement.  
-		 * For a scene with a duration of `0`, the tween will be triggered when scrolling forward past the scene's trigger position and reversed, when scrolling back.  
+		 * Add a tween to the scene.
+		 * If you want to add multiple tweens, add them into a GSAP Timeline object and supply it instead (see example below).
+		 *
+		 * If the scene has a duration, the tween's duration will be projected to the scroll distance of the scene, meaning its progress will be synced to scrollbar movement.
+		 * For a scene with a duration of `0`, the tween will be triggered when scrolling forward past the scene's trigger position and reversed, when scrolling back.
 		 * To gain better understanding, check out the [Simple Tweening example](../examples/basic/simple_tweening.html).
 		 *
 		 * Instead of supplying a tween this method can also be used as a shorthand for `TweenMax.to()` (see example below).
@@ -28891,7 +28891,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		};
 
 		/**
-		 * Remove the tween from the scene.  
+		 * Remove the tween from the scene.
 		 * This will terminate the control of the Scene over the tween.
 		 *
 		 * Using the reset option you can decide if the tween should remain in the current state or be rewound to set the target elements back to the state they were in before the tween was added to the scene.
@@ -29109,7 +29109,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
  * The javascript library for magical scroll interactions.
  * (c) 2015 Jan Paepke (@janpaepke)
  * Project Website: http://scrollmagic.io
- * 
+ *
  * @version 2.0.5
  * @license Dual licensed under MIT license and GPL.
  * @author Jan Paepke - e-mail@janpaepke.de
@@ -29173,7 +29173,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		};
 
 		/**
-		 * Add visual indicators for a ScrollMagic.Scene.  
+		 * Add visual indicators for a ScrollMagic.Scene.
 		 * @memberof! debug.addIndicators#
 		 *
 		 * @example
@@ -29184,7 +29184,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		 * scene.addIndicators({name: "pin scene", colorEnd: "#FFFFFF"});
 		 *
 		 * @param {object} [options] - An object containing one or more options for the indicators.
-		 * @param {(string|object)} [options.parent=undefined] - A selector, DOM Object or a jQuery object that the indicators should be added to.  
+		 * @param {(string|object)} [options.parent=undefined] - A selector, DOM Object or a jQuery object that the indicators should be added to.
 		 If undefined, the controller's container will be used.
 		 * @param {number} [options.name=""] - This string will be displayed at the start and end indicators of the scene for identification purposes. If no name is supplied an automatic index will be used.
 		 * @param {number} [options.indent=0] - Additional position offset for the indicators (useful, when having multiple scenes starting at the same position).
@@ -29249,7 +29249,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 	 */
 	// add option to globally auto-add indicators to scenes
 	/**
-	 * Every ScrollMagic.Controller instance now accepts an additional option.  
+	 * Every ScrollMagic.Controller instance now accepts an additional option.
 	 * See {@link ScrollMagic.Controller} for a complete list of the standard options.
 	 * @memberof! debug.addIndicators#
 	 * @method new ScrollMagic.Controller(options)
@@ -29610,7 +29610,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		};
 
 		// updates the trigger group -> either join existing or add new one
-/*	
+/*
 		 * Logic:
 		 * 1 if a trigger group exist, check if it's in sync with Scene settings – if so, nothing else needs to happen
 		 * 2 try to find an existing one that matches Scene parameters
@@ -29783,7 +29783,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
  * @license Copyright (c) 2008-2016, GreenSock. All rights reserved.
  * This work is subject to the terms at http://greensock.com/standard-license or for
  * Club GreenSock members, the software agreement that was issued with your membership.
- * 
+ *
  * @author: Jack Doyle, jack@greensock.com
  **/
 var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(global) !== "undefined") ? global : this || window; //helps ensure compatibility with AMD/RequireJS and CommonJS/Node
@@ -33621,20 +33621,20 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 	App.current = {
 		module : null,
 		state  : null
-	}; 
+	};
 
 	App.elements = {
 		$win      : $(window),
 		$doc      : $(document),
 		$html     : $('html'),
-		$body     : $('body')			
+		$body     : $('body')
 	};
 
 	App._init = function() {
-		this._initFoundation();	
+		this._initFoundation();
 		this.current.state = Foundation.MediaQuery.current;
 		this.main.init();
-		this._dispatchInit(this.current.state);		
+		this._dispatchInit(this.current.state);
 	};
 
 	App._dispatchInit = function(name) {
@@ -33652,7 +33652,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 	App._initFoundation = function() {
 		this.elements.$doc.foundation();
 	};
-	
+
 	// window.App = {};
 
 	// App = function() {
@@ -33665,7 +33665,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 	// 	var elements = {
 	// 		$win      : $(window),
 	// 		$doc      : $(document),
-	// 		$body     : $('body')			
+	// 		$body     : $('body')
 	// 	};
 
 	// 	return {
@@ -33677,7 +33677,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 	// App.prototype._init = function() {
 	// 	this._initFoundation();
 	// 	App.current.state = Foundation.MediaQuery.current;
-	// 	this._dispatchInit(App.current.state);		
+	// 	this._dispatchInit(App.current.state);
 	// };
 
 	// App.prototype._dispatchInit = function(name) {
@@ -33705,7 +33705,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		};
 
 		var settings = {
-			
+
 		};
 
 		function _init() {
@@ -33740,12 +33740,12 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			countSkipTimer : null,
 			introInt       : null,
 			images         : [],
-			$bgEffects     : null		
+			$bgEffects     : null
 		};
 
 		var settings = {
 			factsDuration     : $('#signs').innerHeight(),
-			factsFadeDuration : 200, 
+			factsFadeDuration : 200,
 			messagesDuration  : 3500,
 			finaleDuration    : 200,
 			navFadeIn         : 400,
@@ -33763,9 +33763,8 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		var pages = {
 		};
 
-		function _init() {	
+		function _init() {
 			initScrollMagic();
-			initAnalytics();
 			checkVideoCapable();
 
 			if (navigator.userAgent.indexOf('NT 6.1') > 0) {
@@ -33786,10 +33785,10 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 			} else {
 				initPreloadVideo();
-			}	
+			}
 
 
-			initNav();			
+			initNav();
 			initFinale();
 			initAddThis();
 
@@ -33802,147 +33801,6 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			}
 		}
 
-		function initAnalytics() {
-
-			// Sections
-			new ScrollMagic.Scene({
-				triggerElement : '#intro',
-				duration       : $('#intro').innerHeight()
-			})
-				//.addIndicators({name : 'intro'})
-				.addTo(elements.controller)
-				.on('enter', function() {
-					analytics.page('Start');
-				});
-
-			new ScrollMagic.Scene({
-				triggerElement : '#signs',
-				duration       : $('#signs').innerHeight()
-			})
-				//.addIndicators({name : 'signs'})
-				.addTo(elements.controller)
-				.on('enter', function() {
-					analytics.page('Signs');
-				});
-
-			new ScrollMagic.Scene({
-				triggerElement : '#finale',
-				duration       : $('#finale').innerHeight()
-			})
-				//.addIndicators({name : 'finale'})
-				.addTo(elements.controller)
-				.on('enter', function() {
-					analytics.page('Finale');
-				});
-
-			// Events
-			$('#messages > div.messages-container > div').on({
-				'analytics:fire' : function() {
-					analytics.page('Messages', $(this).data('timer') +' seconds');					
-				}
-			});
-
-			$('#signs > .content-container > a').on({
-				'click' : function(e) {
-					var $this = $(this),
-						label = $this.find('h3').text(),
-						text  = $this.find('em').text(),
-						action;
-
-					if ($this.hasClass('active')) {
-						action = 'Close';
-					} else {
-						action = 'Open';
-					}
-
-					analytics.track('Learned about FAST', {
-						category: 'Engagement',
-						label: label,
-						text: text,
-						action: action
-					});
-				}
-			});
-
-			
-			App.elements.$win.on({
-				'addthis:share' : function(e, svc) {
-					if (svc.data.service === 'tweet') {
-						analytics.track('Shared on Social', {
-						   category: 'Engagement',
-						   label: 'Twitter',
-						   action: 'Share',
-						   location: 'unknown'
-						});
-					}
-				},
-				'facebook:like' : function(e, url, el) {
-					analytics.track('Shared on Social', {
-					   category: 'Engagement',
-					   label: 'Facebook',
-					   action: 'Like',
-					   location: 'sidebar'
-					});
-				}
-			});			
-
-			$('nav .share-buttons > a, #signs .links .active-state > a').on({
-				'click' : function(e) {
-					var $this = $(this),
-						label,						
-						location;
-
-					if ($this.hasClass('addthis_button_facebook')) {
-						label = 'Facebook';
-					} else if ($this.hasClass('addthis_button_tweet')) {
-						label = 'Twitter';
-					} else if ($this.hasClass('addthis_button_email')) {
-						label = 'Email';
-					}
-
-					if ($this.parents('#signs').length > 0) {
-						location = 'button';
-					} else if ($this.parents('nav').length > 0) {
-						location = 'sidebar';
-					}
-
-					analytics.track('Shared on Social', {
-					   category: 'Engagement',
-					   label: label,
-					   action: 'Share',
-					   location: location
-					});
-				}
-			});
-
-			// need to track twitter and likes
-			
-			$('#signs a[title*="Download"], #finale .links a').on({
-				'click' : function(e) {
-					var $this = $(this),
-						label, text;
-
-					if ($this.parents('#signs').length > 0) {
-						label = 'Downloaded PDF';
-					} else if ($this.attr('title').indexOf('Learn') > -1) {
-						label = 'Learned More';
-					} else if ($this.attr('title').indexOf('Assessment') > -1) {
-						label = 'Took Assessment';
-					} else if ($this.attr('title').indexOf('newsletter') > -1) {
-						label = 'Signed up for Newsletter';
-					}
-
-					text = $this.text().trim();
-
-					analytics.track('Clicked CTA', {
-						category: 'Conversion',
-						label: label,
-						text: text
-					});
-				}
-			});
-		}
-
 		function initPreloadVideo() {
 			//alert(!!document.createElement('video').canPlayType);
 
@@ -33952,14 +33810,14 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				if (settings.videoLoaded === false) {
 					settings.videoLoaded = true;
 					App.elements.$body.addClass('loaded');
-					
+
 					setTimeout(function() {
 						App.elements.$body.addClass('loadedAnimComplete');
 					}, 500);
 
 					initIntro();
 					playIntroVideo();
-					initFacts();					
+					initFacts();
 					initMessages();
 				}
 			});
@@ -33974,7 +33832,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			}
 		}
 
-		function initPreloadImages() {	
+		function initPreloadImages() {
 
 			$.each(settings.stageImages, function(key, val) {
 				elements.$bgEffects.append('<div class="preload" style="background-image: url('+ val.src +');"></div>');
@@ -33987,14 +33845,14 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 						setTimeout(function() {
 							App.elements.$body.addClass('loadedAnimComplete');
-						}, 500);	
+						}, 500);
 
 						initIntro();
 						playIntroImages();
 						initFacts();
 						initMessages();
 
-					});	
+					});
 				}
 			});
 		}
@@ -34003,17 +33861,17 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			window.addthis_config = window.addthis_config || {};
 			window.addthis_config.pubid = 'ra-572636b97b99bf7d';
 			window.addthis_config.data_track_addressbar = false;
-		    window.addthis_config.data_track_clickback = false;	    
+		    window.addthis_config.data_track_clickback = false;
 
 			$.getScript('//s7.addthis.com/js/300/addthis_widget.js#domready=1', function(data, textStatus, jqxhr) {
 				window.addthis.addEventListener('addthis.ready', function() {
 					window.addthis.addEventListener('addthis.menu.share', function(svc) {
 				 		App.elements.$win.trigger('addthis:share', svc);
-				 	});				 	
-				});				
-			});	        
+				 	});
+				});
+			});
 		}
-		
+
 		function initScrollMagic() {
 			elements.controller = new ScrollMagic.Controller();
 		}
@@ -34021,7 +33879,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		function initNav() {
 			var $navItems = elements.$nav.find('.section-nav'),
 				tween;
-			
+
 			tween = new TimelineMax()
 						.to('nav, .back-to-top', 1, {opacity : 1});
 
@@ -34042,7 +33900,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						var id        = $navItems.eq(i).attr('href'),
 							$div      = $(id),
 							divPos    = $div.offset().top,
-							divHeight = $div.outerHeight();				
+							divHeight = $div.outerHeight();
 
 						if (windowPos >= divPos && windowPos < (divPos + divHeight)) {
 							$navItems.filter('a[href="'+ id +'"]').addClass('active');
@@ -34064,10 +33922,10 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 					e.preventDefault();
 				}
-			});			
+			});
 		}
 
-		function initIntro() {	
+		function initIntro() {
 			var $intro = $('#intro'),
 				$skip  = $intro.find('a.skip'),
 				introInt = null;
@@ -34092,18 +33950,18 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					}
 				});
 			}
-			
+
 			$skip.on({
 				'click' : function(e) {
 					clearTimeout(elements.introSkipTimer);
 					TweenMax.to(window, 0.4, {scrollTo: {y: window.innerHeight}, ease: Power2.easeOut});
 					e.preventDefault();
 				}
-			});			
+			});
 
 			new ScrollMagic.Scene({
 					offset : 0,
-					duration: window.innerHeight / 2			
+					duration: window.innerHeight / 2
 				})
 				//.addIndicators({name : 'introReset'})
 				.addTo(elements.controller)
@@ -34115,12 +33973,12 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						if (!settings.videoCabable) {
 							playIntroImages();
 						} else {
-							playIntroVideo();	
-						}								
+							playIntroVideo();
+						}
 					}
 				});
 		}
-		
+
 		function playIntroVideo() {
 			elements.introVideo.currentTime = 0;
 			elements.introVideo.play();
@@ -34128,7 +33986,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 		function playIntroImages() {
 			var $intro       = $('#intro'),
-				imageNum     = 0, 
+				imageNum     = 0,
 				opacityPer   = 0,
 				$stageImages = $('#intro-stage > div');
 
@@ -34138,9 +33996,9 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			$intro.removeClass('active');
 
 			elements.introInt = setInterval(function() {
-				opacityPer = opacityPer + 0.1;			
+				opacityPer = opacityPer + 0.1;
 
-				$stageImages.eq(imageNum).css('opacity', opacityPer);				
+				$stageImages.eq(imageNum).css('opacity', opacityPer);
 
 				if (opacityPer.toFixed(1) >= 1.0) {
 					opacityPer = 0;
@@ -34207,7 +34065,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					duration : settings.factsFadeDuration
 				})
 				.setTween(fadeTween)
-				//.addIndicators({name: 'fader'})				
+				//.addIndicators({name: 'fader'})
 				.addTo(elements.controller);
 
 			new ScrollMagic.Scene({
@@ -34216,7 +34074,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					duration       : settings.factsFadeDuration - 50
 				})
 				.setTween($('#signs .keep-scrolling'), {opacity: 0, bottom: -80})
-				//.addIndicators({name: 'fader'})	
+				//.addIndicators({name: 'fader'})
 				.addTo(elements.controller);
 		}
 
@@ -34250,14 +34108,14 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						this.pause();
 						$('#messages .keep-scrolling').text('Keep scrolling');
 					}
-				});	
+				});
 			}
 
 			$ticks.each(function(i) {
 				var $tick = $(this);
 
 				$tick.css('transform', 'rotate('+ i * (360 / $ticks.length) +'deg)');
-			});		
+			});
 
 
 			new ScrollMagic.Scene({
@@ -34302,13 +34160,13 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						}
 
 						var scrollY = $('#signs').offset().top + $('#signs').height();
-						
+
 						if (settings.navComplete === true) {
 							TweenMax.to(window, 0.4, {scrollTo: {y: scrollY}, ease: Power2.easeOut});
 						}
 						i = x = t = y = 0;
 						$ticks.hide();
-									
+
 					}
 
 					settings.bgVideoCurrentTime = y * effectsCount;
@@ -34323,18 +34181,17 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					}
 
 					if (i !== prevI) {
-						prevI = i;						
+						prevI = i;
 
 						$messages
 							.removeClass('active')
 							.eq(i-1)
-								.addClass('active')
-								.trigger('analytics:fire');
+								.addClass('active');
 					}
 
 					$clockSeconds.text(Math.round(e.progress.toFixed(3) * 60));
 				})
-				.on('start', function(e) {			
+				.on('start', function(e) {
 					if (e.scrollDirection === "FORWARD") {
 						// Entered through the top
 						x = 0;
@@ -34346,7 +34203,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						$messages.removeClass('active');
 						$messages.eq(0).addClass('active');
 						$ticks.hide();
-						$ticks.eq(0).show();						
+						$ticks.eq(0).show();
 					}
 
 					if (e.scrollDirection === "REVERSE") {
@@ -34357,21 +34214,21 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						$ticks.hide();
 						$ticks.eq(ticksCount).show();
 					}
-				})	
+				})
 				.on('enter', function(e) {
 					$('#messages .keep-scrolling').addClass('active');
 				})
 				.on('leave', function(e) {
 					$('#messages .keep-scrolling').removeClass('active');
-				})			
-				.on('end', function(e) {				
+				})
+				.on('end', function(e) {
 					if (e.scrollDirection === "REVERSE") {
 						x = effectsCount - 1;
 						if (!settings.videoCabable) {
 							effects.css('opacity', 1);
 						} else {
 							effects.setCurrentTime = effects.duration;
-						}						
+						}
 					}
 				});
 		}
@@ -34381,7 +34238,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				$scroller = $finale.find('article');
 
 			new ScrollMagic.Scene({
-					triggerElement: '#finale',					
+					triggerElement: '#finale',
 					duration      : settings.finaleDuration
 				})
 				.setTween('#bg-stage', 1, {opacity: 1})
@@ -34396,14 +34253,14 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				.addTo(elements.controller)
 				.on('start', function(e) {
 					if (e.scrollDirection === "FORWARD") {
-						$('#bg-stage div.finale').addClass('active');					
+						$('#bg-stage div.finale').addClass('active');
 					}
 				})
 				.on('end', function(e) {
 					if (e.scrollDirection === "REVERSE") {
 						$('#bg-stage div.finale').removeClass('active');
 					}
-				});			
+				});
 		}
 
 		function smokeEffect() {
@@ -34445,11 +34302,11 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				var percent;
 
 				percent = (this.rMax - this.r) / this.rMax;
-				
+
 				this.rGrowth = 0.01 + this.rGrowthBase * percent;
 				this.r      += this.rGrowth;
 				this.alpha   = percent;
-				
+
 				if (this.r > this.rMax) {
 					blips.splice(i, 1);
 				}
@@ -34466,7 +34323,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			clear = function() {
 				ctx.globalCompositeOperation = 'destination-out';
 				ctx.fillStyle = 'hsla(0, 0%, 0%, 0.05)';
-				ctx.fillRect(0, 0, cw, ch);				
+				ctx.fillRect(0, 0, cw, ch);
 				ctx.globalCompositeOperation = 'lighter';
 			};
 
@@ -34474,21 +34331,21 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				var i;
 				window.requestAnimationFrame(run, c);
 				clear();
-				
+
 				i = blips.length;
-				
+
 				while (i--) {
 				  blips[i].update(i);
 				}
-				
+
 				i = blips.length;
-				
+
 				while (i--) {
 				  blips[i].render(i);
 				}
-				
+
 				blips.push(new Blip(rand(0, cw), rand(0, ch)));
-				
+
 				globalTick++;
 			};
 
@@ -34503,10 +34360,10 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 		function checkVideoCapable() {
 			var retval = true;
-			
+
 			if (Modernizr.touchevents || (
 						navigator.userAgent.indexOf('NT 6.1') > 0 && (
-							navigator.userAgent.indexOf('MSIE ') > 0 || 
+							navigator.userAgent.indexOf('MSIE ') > 0 ||
 							navigator.userAgent.indexOf('Trident/') > 0
 						)
 					)
@@ -34521,7 +34378,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		return {
 			elements       : elements,
 			settings       : settings,
-			init           : _init			
+			init           : _init
 		};
 	}());
 
@@ -34557,7 +34414,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 	App.small = (function () {
 
-		var elements = {			
+		var elements = {
 		};
 
 		var settings = {
@@ -34574,7 +34431,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			App.elements.$body.removeClass('js-mobile-menu-active');
 		}
 
-		
+
 		function destoryFacts() {
 
 		}
@@ -34596,9 +34453,9 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 		if (App.current.state != name) {
 			App._dispatchDestroy(App.current.state);
-			doInit = true;	
+			doInit = true;
 		}
-		
+
 		App.current.state = name;
 
 		if (doInit) {
