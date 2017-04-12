@@ -33765,6 +33765,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 		function _init() {
 			initScrollMagic();
+			initAnalytics();
 			checkVideoCapable();
 
 			if (navigator.userAgent.indexOf('NT 6.1') > 0) {
@@ -33799,6 +33800,45 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					pages[key].init();
 				}
 			}
+		}
+
+		function initAnalytics() {
+		    new ScrollMagic.Scene({
+		            triggerElement: '#intro',
+		            duration: $('#intro').innerHeight()
+		        })
+		        .addTo(elements.controller)
+		        .on('enter', function() {
+		            history.pushState(null, null, '#intro');
+		        });
+
+		    new ScrollMagic.Scene({
+		            triggerElement: '#signs',
+		            duration: $('#signs').innerHeight()
+		        })
+		        .addTo(elements.controller)
+		        .on('enter', function() {
+		            history.pushState(null, null, '#signs');
+		        });
+
+		    new ScrollMagic.Scene({
+		            triggerElement: '#messages',
+		            offset: $('#messages').height() / 2,
+		            duration: $('#messages').innerHeight()
+		        })
+		        .addTo(elements.controller)
+		        .on('enter', function() {
+		            history.pushState(null, null, '#messages');
+		        });
+
+		    new ScrollMagic.Scene({
+		            triggerElement: '#finale',
+		            duration: $('#finale').innerHeight()
+		        })
+		        .addTo(elements.controller)
+		        .on('enter', function() {
+		            history.pushState(null, null, '#finale');
+		        });
 		}
 
 		function initPreloadVideo() {
