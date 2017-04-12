@@ -33800,6 +33800,12 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					pages[key].init();
 				}
 			}
+			//hack to make the #messages show in url
+			$('.messages-icon').click(function(){
+				$('html, body').animate({
+		        scrollTop: $("#signs").offset().top +  $('#signs').innerHeight()
+		    }, 300);
+			});
 		}
 
 		function initAnalytics() {
