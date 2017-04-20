@@ -34028,7 +34028,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		function playIntroVideo() {
 			elements.introVideo.currentTime = 0;
 			elements.introVideo.play();
-		
+
 		}
 
 		function playIntroImages() {
@@ -34150,10 +34150,15 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				effectsPer    = 1 / (effectsCount - 1);
 				effectsStep   = effectsPer * settings.messagesDuration;
 
+				$('#messages .keep-scrolling').text('Scroll to start the timer');
 				effects.addEventListener('timeupdate', function() {
 					if (this.currentTime >= settings.bgVideoCurrentTime && this.currentTime > 0.5) {
 						this.pause();
-						$('#messages .keep-scrolling').text('Keep scrolling');
+						//$('#messages .keep-scrolling').text('Keep scrolling');
+						//$('#messages .keep-scrolling').text('Scroll to start the timer');
+					}
+					if (this.currentTime >= settings.bgVideoCurrentTime && this.currentTime > 1) {
+
 					}
 				});
 			}
@@ -34218,6 +34223,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 					settings.bgVideoCurrentTime = y * effectsCount;
 
+
 					i = i === 0 ? 1 : i;
 
 					if (settings.videoCabable) {
@@ -34237,8 +34243,16 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					}
 
 					$clockSeconds.text(Math.round(e.progress.toFixed(3) * 60));
+					console.log(e.progress.toFixed(3));
+					if(e.progress.toFixed(3) > 0){
+						$('#messages .keep-scrolling').text('Keep scrolling');
+					}
+					else{
+						$('#messages .keep-scrolling').text('Scroll to start the timer');
+					}
 				})
 				.on('start', function(e) {
+
 					if (e.scrollDirection === "FORWARD") {
 						// Entered through the top
 						x = 0;
@@ -34264,6 +34278,8 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				})
 				.on('enter', function(e) {
 					$('#messages .keep-scrolling').addClass('active');
+
+
 				})
 				.on('leave', function(e) {
 					$('#messages .keep-scrolling').removeClass('active');
