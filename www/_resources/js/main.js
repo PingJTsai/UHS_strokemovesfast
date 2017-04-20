@@ -34027,7 +34027,8 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 		function playIntroVideo() {
 			elements.introVideo.currentTime = 0;
-			elements.introVideo.play();
+			//elements.introVideo.play();
+			$('#intro-video video').get(0).play();
 		}
 
 		function playIntroImages() {
