@@ -33862,9 +33862,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					}, 500);
 
 					initIntro();
-					setTimeout(function(){
-						playIntroVideo();
-					},400)
+					playIntroVideo();
 
 					initFacts();
 					initMessages();
@@ -34030,7 +34028,9 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 		function playIntroVideo() {
 			elements.introVideo.currentTime = 0;
-			elements.introVideo.play();
+			var vid = document.getElementById("video-player");
+			vid.play();
+			//elements.introVideo.play();
 			console.log('play intro video', elements.introVideo);
 		}
 
