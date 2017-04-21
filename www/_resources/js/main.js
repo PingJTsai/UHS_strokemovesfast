@@ -33990,6 +33990,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			} else {
 				elements.introVideo = $('#intro-video video').get(0);
 				elements.introVideo.addEventListener('timeupdate', function() {
+					console.log('video time',this.currentTime);
 					if (this.currentTime >= this.duration / 2) {
 						$('#intro .title').css('opacity', 0);
 						$('#intro .sub-title').css('opacity', 1);
