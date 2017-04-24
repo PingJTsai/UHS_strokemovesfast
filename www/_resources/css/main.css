@@ -2823,6 +2823,7 @@ a.skip {
 }
 
 #intro-video video,#bg-video video {
+	display:block;
 	position: fixed;
 	top: 50%;
 	left: 50%;
