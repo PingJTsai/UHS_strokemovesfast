@@ -2270,7 +2270,7 @@ nav {
 @media screen and (min-width: 64em) {
 
 	nav {
-		bottom: auto;
+		/*bottom: auto;*/
 		left: 40px;
 		top: 50%;
 		opacity: 0;
@@ -2288,7 +2288,11 @@ nav {
 		width: 60px;
 	}
 }
-
+@media screen and (max-height: 640px) {
+	nav {
+		top: 55%;
+	}
+}
 
 nav > a,nav > div {
 	position: relative;
@@ -2469,12 +2473,17 @@ nav > a:hover .fa-stack-2x,nav > div:hover .fa-stack-2x {
 
 
 @media screen and (min-width: 64em) {
-
-	nav > a:hover > span,nav > a:hover .fb-like,nav > div:hover > span,nav > div:hover .fb-like {
+	nav > a > span,nav > a .fb-like,nav > div > span,nav > div .fb-like {
+	 min-width: 160px;
+		opacity: 1;
+		-webkit-transform: translate(0, -50%);
+						transform: translate(0, -50%);
+	}
+	/*nav > a:hover > span,nav > a:hover .fb-like,nav > div:hover > span,nav > div:hover .fb-like {
 		opacity: 1;
 		-webkit-transform: translate(0, -50%);
 		        transform: translate(0, -50%);
-	}
+	}*/
 }
 
 
