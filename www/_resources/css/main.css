@@ -2115,6 +2115,11 @@ p + .stat {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
+/*hide the like button on old firefox for facebook*/
+._2tga._49ve{
+	opacity:0;
+	pointer-events:none;
+}
 
 .icon-checklist:before {
 	content: "\61";
