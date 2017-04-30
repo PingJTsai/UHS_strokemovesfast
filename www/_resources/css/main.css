@@ -2116,9 +2116,9 @@ p + .stat {
 	-moz-osx-font-smoothing: grayscale;
 }
 /*hide the like button on old firefox for facebook*/
-._2tga{
-	opacity:0!important;
-	pointer-events:none!important;
+.fb_iframe_widget span{
+	left:-7px;
+	top:30px;
 }
 
 .icon-checklist:before {
@@ -2293,7 +2293,7 @@ nav {
 		width: 60px;
 	}
 }
-@media screen and (max-height: 640px) {
+@media screen and (max-height: 640px) and (min-width:1024px){
 	nav {
 		top: 55%;
 	}
