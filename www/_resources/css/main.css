@@ -2550,7 +2550,7 @@ section {
 	display: none;
 }
 
-a.skip {
+/*a.skip {
 	position: absolute;
 	top: 100vh;
 	left: 50%;
@@ -2562,6 +2562,66 @@ a.skip {
 	font-weight: 400;
 	-webkit-transform: translateX(-50%);
 	        transform: translateX(-50%);
+}*/
+.top-buttons-row {
+	font-weight:bold;
+	position: absolute;
+	top: 90vh;
+  left:0;
+  width:100%;
+	z-index: 60;
+	display: inline-block;
+	margin-top: -110px;
+	color: #fff;
+	font-size: 19px;
+	font-weight: 400;
+	text-align:center;
+}
+.top-buttons-row .center{
+	width:300px;
+	margin:0 auto;
+}
+.top-buttons-row a.top-button{
+	display: inline-block;
+	width: 230px;
+	vertical-align: top;
+	text-align: left;
+	line-height:20px;
+	padding:10px;
+	color:#fff;
+	margin-bottom:20px;
+
+	/*background-color: rgba(0, 21, 39, 0.8);*/
+	font-weight: 700;
+  font-size: 15px;
+  color: #fff;
+  background-color: #014886;
+  border-bottom: 6px solid #004079;
+}
+.top-buttons-row a.top-button span{
+	font-size: 18px;
+  margin-left: 10px;
+  display: inline-block;
+	width:140px;
+	text-align:left;
+}
+.top-buttons-row a.top-button i.icon-checklist{
+	  font-size: 40px;
+		float:left;
+		color:#fff;
+		width:40px;
+    margin-left: 10px;
+    display: inline-block;
+		/*color:#fff;*/
+}
+
+.top-buttons-row .top-text{
+	display: inline-block;
+	width: 100%;
+  vertical-align: top;
+	text-align: center;
+	line-height:20px;
+	font-size:16px;
 }
 
 .button {
@@ -2865,7 +2925,9 @@ a.skip {
 	font-size: 40px;
 	font-weight: 300;
 	line-height: 1.125;
+	 margin-left: 3.5px;
 }
+
 
 @media screen and (min-width: 64em) {
 
@@ -2901,17 +2963,20 @@ a.skip {
 @media screen and (orientation: landscape) {
 
 	#intro > div {
-		height: 95px;
+		height: 120px;
 	}
 }
 
-
+#messages > div.messages-container{
+	min-height:240px;
+}
 @media screen and (min-width: 64em) {
 
 	#intro > div {
 		width: 445px;
 		height: 240px;
 	}
+
 }
 
 
@@ -3605,5 +3670,14 @@ a.skip {
 		width: 66%;
 		float: right;
 		z-index: 50;
+	}
+}
+@media screen and (max-width: 582px) {
+	#intro .title, #intro .sub-title  {
+		height:120px!important;
+		top:46%;
+	}
+	.top-buttons-row{
+		margin-top:-140px;
 	}
 }
